@@ -6,7 +6,8 @@ const dice1 = document.querySelector('.dice1');
 const dice2 = document.querySelector('.dice2');
 const reset = document.querySelector('.reset');
 const win = document.querySelector('h1');
-var res = 0;
+let res = 0;
+let scorex=0;
 
 const prep = () => {
     score1.innerHTML = '0';
@@ -15,6 +16,7 @@ const prep = () => {
     win.classList.add('h');
     roll1.classList.remove('op');
     roll2.classList.remove('op');
+    res = 0;
 }
 
 const check = () =>{
@@ -28,40 +30,27 @@ const check = () =>{
         }else {
             win.innerHTML = 'Egalitate';
         }
-        res = 0;
     }
 }
 
+const roll = (rollx) =>{
+    if(rollx===roll1){
+        scorex = score1;
+    }else{
+        scorex = score2;
+    }
+    if (scorex.innerHTML === '0'){
+        let rnd1 = Math.floor(Math.random() * 6) + 1;
+        let rnd2 = Math.floor(Math.random() * 6) + 1;
+        scorex.innerHTML = `${rnd1+rnd2}`;
+        dice1.src = `dice${rnd1}.png`;
+        dice2.src = `dice${rnd2}.png`;
+        rollx.classList.add('op');
+        res++;
+        check();
+    }
+}
+
+roll1.addEventListener('click', (e) => roll(e.target));
+roll2.addEventListener('click', (e) => roll(e.target));
 reset.onclick = prep;
-
-
-roll1.onclick = () => {
-    if (score1.innerHTML === '0'){
-        let rnd1 = Math.floor(Math.random() * 6) + 1;
-        let rnd2 = Math.floor(Math.random() * 6) + 1;
-        score1.innerHTML = `${rnd1+rnd2}`;
-        dice1.src = `dice${rnd1}.png`;
-        dice2.src = `dice${rnd2}.png`;
-        roll1.classList.add('op');
-        res++;
-        check();
-    }
-}
-
-roll2.onclick = () => {
-    if (score2.innerHTML === '0'){
-        let rnd1 = Math.floor(Math.random() * 6) + 1;
-        let rnd2 = Math.floor(Math.random() * 6) + 1;
-        score2.innerHTML = `${rnd1+rnd2}`;
-        dice1.src = `dice${rnd1}.png`;
-        dice2.src = `dice${rnd2}.png`;
-        roll2.classList.add('op');
-        res++;
-        check();
-    }
-}
-
-
-
-
-
